@@ -191,9 +191,11 @@ function App() {
                   {totalAllianceRewards[asset] ? 
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <span>
+                        {console.log((totalAllianceRewards[asset])*cachedPrices["terra-luna-2"])}
+                        {console.log(cachedPrices["terra-luna-2"])}
                         {formatNumber(totalAllianceRewards[asset])}
                         <img src="https://app.osmosis.zone/tokens/generated/luna.svg" alt="Luna" style={{ width: '1rem', height: '1rem' }} />
-                        {` (${totalAllianceRewards[asset].toLocaleString('en-US', { style: 'currency', currency: 'USD' })})`}
+                        {` (${((totalAllianceRewards[asset])*cachedPrices["terra-luna-2"]).toLocaleString('en-US', { style: 'currency', currency: 'USD' })})`}
                       </span>
                     </div> : 
                     '-'
