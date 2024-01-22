@@ -212,15 +212,18 @@ function App() {
             <div style={{ fontSize: '1rem' }}>${formatOphirPrice(price)}</div>
           </div>
         ))}
-        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
+        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem', cursor: 'pointer' }}
+             onClick={() => window.open('https://app.whitewhale.money/migaloo/swap?from=OPHIR&to=WHALE', '_blank')}>
           <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Ophir</div>
           <div style={{ fontSize: '1rem' }}>${formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('OPHIR-WHALE', cachedPrices["white-whale"] || 0))}</div>
         </div>
-        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
+        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem', cursor: 'pointer' }}
+             onClick={() => window.open('https://app.whitewhale.money/migaloo/swap?from=bWHALE&to=WHALE', '_blank')}>
           <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>bWhale</div>
           <div style={{ fontSize: '1rem' }}>${formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('bWHALE-WHALE', cachedPrices["white-whale"] || 0))}</div>
         </div>
-        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
+        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem', cursor: 'pointer' }}
+             onClick={() => window.open('https://app.whitewhale.money/migaloo/swap?from=ampWHALE&to=WHALE', '_blank')}>
           <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>ampWhale</div>
           <div style={{ fontSize: '1rem' }}>${formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('ampWHALE-WHALE', cachedPrices["white-whale"] || 0))}</div>
         </div>
