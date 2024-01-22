@@ -132,21 +132,12 @@ function App() {
   
 
   return (
-    <div style={{ display: 'block', justifyContent: 'center', width: '90vw', margin: '0' }}>
-      <h1 style={{ textAlign: 'center' }}>Ophir DAO Live Analytics</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', margin: '1rem 0', textAlign: 'center'}}>
-        {Object.entries(cachedPrices).map(([asset, price]) => (
-          <div key={asset} style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
-            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{coinGeckoSymbolToHumanReadable[asset.toUpperCase()] || asset.toCamelCase()}</div>
-            <div style={{ fontSize: '1rem' }}>${price.toFixed(2)}</div>
-          </div>
-        ))}
-        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
-          <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Ophir</div>
-          <div style={{ fontSize: '1rem' }}>${formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('OPHIR-WHALE', cachedPrices["white-whale"] || 0))}</div>
-        </div>
-      </div>
-      <div style={{ width: '90vw', maxWidth: '64rem', padding: '1rem', marginBottom: '2rem', marginLeft: "-1rem" }}>
+    <div style={{ display: 'block', justifyContent: 'center', width: '90vw', marginTop: '-1rem' }}>
+      <p style={{ textAlign: 'center', marginTop: '1rem' }}>
+        <small>Last Updated: {new Date().toLocaleString()}</small>
+      </p>
+      <h1 style={{ textAlign: 'center', marginTop: '-1rem', cursor: 'pointer' }} onClick={() => window.open('https://daodao.zone/dao/migaloo10gj7p9tz9ncjk7fm7tmlax7q6pyljfrawjxjfs09a7e7g933sj0q7yeadc/treasury', '_blank')}>Ophir DAO Live Analytics</h1>
+      <div style={{ width: '90vw', maxWidth: '64rem', padding: '1rem', marginTop: '-2rem', marginBottom: '2rem', marginLeft: "-1rem" }}>
         <h2 style={{marginLeft: '4.5rem' }}>DAO Treasury Assets</h2>
         <table style={{ width: '100%', tableLayout: 'auto', textAlign: 'center' }}>
           <thead>
@@ -212,6 +203,27 @@ function App() {
             ))}
           </tbody>
         </table>
+      </div>
+      <h2 style={{textAlign: 'center' }}>Prices</h2>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', margin: '1rem 0', textAlign: 'center'}}>
+        {Object.entries(cachedPrices).map(([asset, price]) => (
+          <div key={asset} style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
+            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{coinGeckoSymbolToHumanReadable[asset.toUpperCase()] || asset.toCamelCase()}</div>
+            <div style={{ fontSize: '1rem' }}>${price.toFixed(2)}</div>
+          </div>
+        ))}
+        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
+          <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Ophir</div>
+          <div style={{ fontSize: '1rem' }}>${formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('OPHIR-WHALE', cachedPrices["white-whale"] || 0))}</div>
+        </div>
+        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
+          <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>bWhale</div>
+          <div style={{ fontSize: '1rem' }}>${formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('bWHALE-WHALE', cachedPrices["white-whale"] || 0))}</div>
+        </div>
+        <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
+          <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>ampWhale</div>
+          <div style={{ fontSize: '1rem' }}>${formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('ampWHALE-WHALE', cachedPrices["white-whale"] || 0))}</div>
+        </div>
       </div>
     </div>
   )
