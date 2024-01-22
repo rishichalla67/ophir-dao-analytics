@@ -209,7 +209,7 @@ function App() {
         {Object.entries(cachedPrices).map(([asset, price]) => (
           <div key={asset} style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
             <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{coinGeckoSymbolToHumanReadable[asset.toUpperCase()] || asset.toCamelCase()}</div>
-            <div style={{ fontSize: '1rem' }}>${price.toFixed(2)}</div>
+            <div style={{ fontSize: '1rem' }}>${formatOphirPrice(price)}</div>
           </div>
         ))}
         <div style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
