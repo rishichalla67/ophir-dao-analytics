@@ -152,7 +152,7 @@ function App() {
         <small>Last Updated: {new Date().toLocaleString()}</small>
       </p>
       <h1 style={{ textAlign: 'center', marginTop: '-1rem', cursor: 'pointer' }} onClick={() => window.open('https://daodao.zone/dao/migaloo10gj7p9tz9ncjk7fm7tmlax7q6pyljfrawjxjfs09a7e7g933sj0q7yeadc/treasury', '_blank')}>Ophir DAO Live Analytics</h1>
-      <div style={{ width: '90vw', maxWidth: '64rem', padding: '1rem', marginTop: '-2rem', marginBottom: '2rem', marginLeft: "-1rem" }}>
+      <div style={{ width: '90vw', maxWidth: '64rem', padding: '1rem', marginTop: '-2rem', marginBottom: '0.5rem', marginLeft: "-1rem" }}>
         <h2 style={{marginLeft: '4.5rem' }}>DAO Treasury Assets</h2>
         <table style={{ width: '100%', tableLayout: 'auto', textAlign: 'center' }}>
           <thead>
@@ -184,9 +184,9 @@ function App() {
           </tbody>
         </table>
       </div>
-      <div style={{ width: '90vw', maxWidth: '64rem', padding: '0rem', marginLeft: '-1rem' }}>
-        <h2 style={{ marginLeft: '5rem' }}>Alliance Staked Assets</h2>
-        <table style={{ width: '95%', tableLayout: 'auto', textAlign: 'center' }}>
+      <div style={{ width: '90vw', maxWidth: '64rem', padding: '0rem' }}>
+        <p style={{ fontWeight: 'bold', textAlign: 'center' }}>Alliance Staked Assets</p>
+        <table style={{ width: '95%', tableLayout: 'auto', textAlign: 'center', marginLeft: '-1rem' }}>
           <thead>
             <tr style={{ backgroundColor: '#fde68a' }}>
               <th style={{ padding: '0.5rem 0.5rem', borderRight: '1px solid' }}>Asset</th>
