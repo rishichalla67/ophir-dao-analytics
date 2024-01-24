@@ -4,7 +4,9 @@ const tokenMappings = {
   'ibc/517E13F14A1245D4DE8CF467ADD4DA0058974CDCC880FA6AE536DBCA1D16D84E': { symbol: 'bWhale', decimals: 6 },
   'ibc/B3F639855EE7478750CC8F82072307ED6E131A8EFF20345E1D136B50C4E5EC36': { symbol: 'ampWhale', decimals: 6 },
   'factory/migaloo1t862qdu9mj5hr3j727247acypym3ej47axu22rrapm4tqlcpuseqltxwq5/ophir': {symbol: 'ophir', decimals: 6},
-  'uwhale': {symbol: "whale", decimals: 6}
+  'uwhale': {symbol: "whale", decimals: 6},
+  'ibc/EA459CE57199098BA5FFDBD3194F498AA78439328A92C7D136F06A5220903DA6': { symbol: 'ampWHALEt', decimals: 6},
+  'ibc/B65E189D3168DB40C88C6A6C92CA3D3BB0A8B6310325D4C43AB5702F06ECD60B': {symbol: 'wBTC', decimals: 8}
 
 };
 
@@ -18,6 +20,7 @@ function App() {
   const [stakedBalances, setStakedBalances] = useState({});
   const [whiteWhalePools, setWhiteWhalePools] = useState({});
   const [ophirDaoTreasuryAssets, setOphirDaoTreasuryAssets] = useState({});
+  const [ophirCirculatingSupply, setOphirCirculatingSupply] = useState(0);
 
   const useCachedApiData = () => {
     const [cachedData, setCachedData] = useState({});
@@ -25,7 +28,7 @@ function App() {
 
     const fetchCoinGeckoPrices = async () => {
       try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=terra-luna-2,white-whale&vs_currencies=usd&include_last_updated_at=true');
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=terra-luna-2,white-whale,bitcoin&vs_currencies=usd&include_last_updated_at=true');
         const data = await response.json();
         const formattedData = Object.keys(data).reduce((acc, key) => {
           acc[key] = data[key].usd;
@@ -69,6 +72,7 @@ function App() {
       maximumFractionDigits: 5,
     });
   };
+
 
   useEffect(() => {
     // Get Alliance Rewards
@@ -123,10 +127,21 @@ function App() {
             if (tokenInfo) {
               acc[tokenInfo.symbol] = parseFloat(data.balances[key]) / Math.pow(10, tokenInfo.decimals);
             }
+            console.log(acc)
             return acc;
           }, {});
           setOphirDaoTreasuryAssets(OphirDaoTreasuryAssets);
         });
+        
+        // Gets OPHIR Circulating Supply
+        fetch('https://therealsnack.com/ophircirculatingsupply', {
+          mode: 'cors' // This will include CORS headers in the request
+        })
+          .then(response => response.json())
+          .then(circulatingSupply => {
+            setOphirCirculatingSupply(circulatingSupply);
+          })
+          .catch(error => console.error('Error fetching Ophir circulating supply:', error));
   }, []);
   const cachedPrices = useCachedApiData();
   
@@ -151,12 +166,16 @@ function App() {
             {Object.entries(ophirDaoTreasuryAssets).map(([asset, balance]) => (
               <tr key={asset} style={{ borderBottom: '1px solid' }}>
                 <td style={{ padding: '0.5rem 0.5rem', borderRight: '1px solid' }}>{asset}</td>
-                <td style={{ padding: '0.5rem 0.5rem', borderRight: '1px solid' }}>{formatNumber(balance)}</td>
+                <td style={{ padding: '0.5rem 0.5rem', borderRight: '1px solid' }}>{asset === 'wBTC' ? formatOphirPrice(balance) : formatNumber(balance)}</td>
                 <td style={{ padding: '0.5rem 0.5rem' }}>
                 ${asset === 'ophir' ? 
                   (formatNumber(balance * calculateAssetValueBasedOnWWPoolPrice('OPHIR-WHALE', cachedPrices["white-whale"] || 0)).toLocaleString('en-US', { style: 'currency', currency: 'USD' })) : 
                   asset === 'whale' ? 
                   (formatNumber(balance * (cachedPrices["white-whale"] || 0)).toLocaleString('en-US', { style: 'currency', currency: 'USD' })) :
+                  asset === 'wBTC' ? 
+                  (formatNumber(balance * (cachedPrices["bitcoin"] || 0)).toLocaleString('en-US', { style: 'currency', currency: 'USD' })) :
+                  asset === 'ampWHALEt' ? 
+                  (formatNumber(balance * (calculateAssetValueBasedOnWWPoolPrice('ampWHALE-WHALE', cachedPrices["white-whale"] || 0))).toLocaleString('en-US', { style: 'currency', currency: 'USD' })) :
                   (formatNumber(balance * (cachedPrices[asset.toLowerCase()] || 0)).toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
                 }
                 </td>
@@ -206,11 +225,28 @@ function App() {
           </tbody>
         </table>
       </div>
+      {/* <h2 style={{textAlign: 'center' }}>Ophir Stats</h2>
+      <div style={{textAlign: 'center', margin: '2rem 0'}}>
+        <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap'}}>
+          <div style={{margin: '0.5rem'}}>
+            <strong>Total Market Cap:</strong>
+            <p>{ophirCirculatingSupply*formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('OPHIR-WHALE', cachedPrices["white-whale"] || 0))}</p>
+          </div>
+          <div style={{margin: '0.5rem'}}>
+            <strong>24h Trading Volume:</strong>
+            <p>$200 Billion</p>
+          </div>
+          <div style={{margin: '0.5rem'}}>
+            <strong>Bitcoin Dominance:</strong>
+            <p>40%</p>
+          </div>
+        </div>
+      </div> */}
       <h2 style={{textAlign: 'center' }}>Prices</h2>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', margin: '1rem 0', textAlign: 'center'}}>
         {Object.entries(cachedPrices).map(([asset, price]) => (
           <div key={asset} style={{ background: '#fde68a', borderRadius: '1rem', padding: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', minWidth: '100px', margin: '0.5rem' }}>
-            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{coinGeckoSymbolToHumanReadable[asset.toUpperCase()] || asset.toCamelCase()}</div>
+            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{coinGeckoSymbolToHumanReadable[asset.toUpperCase()] || asset}</div>
             <div style={{ fontSize: '1rem' }}>${formatOphirPrice(price)}</div>
           </div>
         ))}
@@ -230,6 +266,7 @@ function App() {
           <div style={{ fontSize: '1rem' }}>${formatOphirPrice(calculateAssetValueBasedOnWWPoolPrice('ampWHALE-WHALE', cachedPrices["white-whale"] || 0))}</div>
         </div>
       </div>
+      
     </div>
   )
 }
